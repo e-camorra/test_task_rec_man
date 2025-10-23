@@ -2,14 +2,16 @@ version: '3.8'
 
 services:
   app:
-    image: php:8.2-fpm
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
     container_name: php_app
     volumes:
       - ./app:/var/www/app
-    working_dir: /var/www/app
+    ports:
+      - "9000:9000"
     depends_on:
       - db
-    command: bash -c "docker-php-ext-install pdo pdo_mysql && php-fpm"
 
   nginx:
     image: nginx:1.27
